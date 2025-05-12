@@ -1,16 +1,18 @@
 package pl.zakrzewski.restapi.model.dto;
 
 import jakarta.validation.constraints.NotBlank;
+import lombok.Builder;
 import lombok.Data;
 
 import java.time.LocalDateTime;
 
 @Data
+@Builder
 public class ComplaintPostCommand {
 
-    private long userId;
+    private Long userId;
 
-    private long productId;
+    private Long productId;
 
     private String content;
 

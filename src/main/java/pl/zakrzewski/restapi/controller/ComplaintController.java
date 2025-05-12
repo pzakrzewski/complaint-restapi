@@ -1,5 +1,6 @@
 package pl.zakrzewski.restapi.controller;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -37,8 +38,8 @@ public class ComplaintController {
     }
 
     @PostMapping("/complaints")
-    public ResponseEntity<ComplaintDto> addComplaint(@RequestBody @Valid ComplaintPostCommand complaintPostCommand) {
-        Complaint complaint = complaintService.addComplaint(complaintPostCommand);
+    public ResponseEntity<ComplaintDto> addComplaint(@RequestBody @Valid ComplaintPostCommand complaintPostCommand, HttpServletRequest request) {
+        Complaint complaint = complaintService.addComplaint(complaintPostCommand, request.getRemoteAddr());
         ComplaintDto complaintDto = ComplaintDtoMapper.mapToComplaintDto(complaint);
         return new ResponseEntity<>(complaintDto, HttpStatus.CREATED);
     }

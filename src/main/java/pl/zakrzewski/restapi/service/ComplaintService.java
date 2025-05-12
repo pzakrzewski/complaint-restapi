@@ -41,7 +41,7 @@ public class ComplaintService {
         return complaint.get();
     }
 
-    public Complaint addComplaint(ComplaintPostCommand complaintPostCommand) {
+    public Complaint addComplaint(ComplaintPostCommand complaintPostCommand, String remoteAddr) {
         Optional<Product> product = productRepository.findById(complaintPostCommand.getProductId());
         if (product.isEmpty()) {
             throw new ProductNotFoundException("Product not found with id: " + complaintPostCommand.getProductId());
@@ -60,7 +60,7 @@ public class ComplaintService {
             complaintSaved = Complaint.builder()
                     .product(product.get())
                     .user(user.get())
-                    .country(geoLocationService.getCountryByIp(complaintPostCommand.getCountry()))
+                    .country(geoLocationService.getCountryByIp(remoteAddr))
                     .content(complaintPostCommand.getContent())
                     .created(complaintPostCommand.getCreated())
                     .build();
