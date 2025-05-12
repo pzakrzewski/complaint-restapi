@@ -11,6 +11,8 @@ import java.util.Optional;
 @Repository
 public interface ComplaintRepository extends JpaRepository<Complaint, Long> {
 
+    Optional<Complaint> findById(Long id);
+
     @Query("Select p From Complaint p")
     List<Complaint> findAllComplaints();
 

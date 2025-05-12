@@ -3,6 +3,9 @@ package pl.zakrzewski.restapi.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import pl.zakrzewski.restapi.exception.ComplaintNotFoundException;
+import pl.zakrzewski.restapi.exception.ProductNotFoundException;
+import pl.zakrzewski.restapi.exception.UserNotFoundException;
 import pl.zakrzewski.restapi.model.Complaint;
 import pl.zakrzewski.restapi.model.Product;
 import pl.zakrzewski.restapi.model.User;
@@ -31,17 +34,21 @@ public class ComplaintService {
     }
 
     public Complaint getSingleComplaint(long id) {
-        return complaintRepository.findById(id).orElse(null);
+        Optional<Complaint> complaint = complaintRepository.findById(id);
+        if (complaint.isEmpty()) {
+            throw new ComplaintNotFoundException("Complaint not found with id: " + id);
+        }
+        return complaint.get();
     }
 
     public Complaint addComplaint(ComplaintPostCommand complaintPostCommand) {
         Optional<Product> product = productRepository.findById(complaintPostCommand.getProductId());
         if (product.isEmpty()) {
-            throw new RuntimeException();
+            throw new ProductNotFoundException("Product not found with id: " + complaintPostCommand.getProductId());
         }
         Optional<User> user = userRepository.findById(complaintPostCommand.getUserId());
         if (user.isEmpty()) {
-            throw new RuntimeException();
+            throw new UserNotFoundException("User not found with id: " + complaintPostCommand.getUserId());
         }
         Optional<Complaint> complaint = complaintRepository
                 .findByUserIdAndProductId(complaintPostCommand.getUserId(), complaintPostCommand.getProductId());
@@ -65,16 +72,20 @@ public class ComplaintService {
 
     @Transactional
     public Complaint editComplaint(long id, ComplaintPutCommand complaint) {
-        Complaint complaintEdited = complaintRepository.findById(id).orElse(null);
-        if (complaintEdited != null) {
-            complaintEdited.setContent(complaint.getContent());
-            return complaintEdited;
+        Optional<Complaint> complaintEdited = complaintRepository.findById(id);
+        if (complaintEdited.isEmpty()) {
+            throw new ComplaintNotFoundException("Complaint not found with id: " + id);
         }
-        return complaintEdited;
+        complaintEdited.get().setContent(complaint.getContent());
+        return complaintEdited.get();
     }
 
     @Transactional
     public void deleteComplaint(long id) {
+        Optional<Complaint> complaintToDelete = complaintRepository.findById(id);
+        if (complaintToDelete.isEmpty()) {
+            throw new ComplaintNotFoundException("Complaint not found with id: " + id);
+        }
         complaintRepository.deleteById(id);
     }
 

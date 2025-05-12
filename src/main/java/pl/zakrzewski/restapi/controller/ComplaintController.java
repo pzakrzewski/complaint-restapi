@@ -32,38 +32,28 @@ public class ComplaintController {
     @GetMapping("/complaints/{id}")
     public ResponseEntity<ComplaintDto> getSingleComplaint(@PathVariable("id") long id) {
         Complaint complaint = complaintService.getSingleComplaint(id);
-        if (complaint != null) {
-            ComplaintDto complaintDto = ComplaintDtoMapper.mapToComplaintDto(complaint);
-            return new ResponseEntity<>(complaintDto, HttpStatus.OK);
-        }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        ComplaintDto complaintDto = ComplaintDtoMapper.mapToComplaintDto(complaint);
+        return new ResponseEntity<>(complaintDto, HttpStatus.OK);
     }
 
     @PostMapping("/complaints")
-    public ResponseEntity<ComplaintDto> addComplaint(@RequestBody @Valid ComplaintPostCommand complaint) {
-        ComplaintDto complaintDto = ComplaintDtoMapper.mapToComplaintDto(complaintService.addComplaint(complaint));
+    public ResponseEntity<ComplaintDto> addComplaint(@RequestBody @Valid ComplaintPostCommand complaintPostCommand) {
+        Complaint complaint = complaintService.addComplaint(complaintPostCommand);
+        ComplaintDto complaintDto = ComplaintDtoMapper.mapToComplaintDto(complaint);
         return new ResponseEntity<>(complaintDto, HttpStatus.CREATED);
     }
 
     @PutMapping("/complaints/{id}")
     public ResponseEntity<ComplaintDto> editComplaint(@PathVariable long id, @RequestBody ComplaintPutCommand complaint) {
         Complaint editedComplaint = complaintService.editComplaint(id, complaint);
-        if (editedComplaint != null) {
-            ComplaintDto complaintDto = ComplaintDtoMapper.mapToComplaintDto(editedComplaint);
-            return new ResponseEntity<>(complaintDto, HttpStatus.OK);
-        }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        ComplaintDto complaintDto = ComplaintDtoMapper.mapToComplaintDto(editedComplaint);
+        return new ResponseEntity<>(complaintDto, HttpStatus.OK);
     }
 
     @DeleteMapping("/complaints/{id}")
     public ResponseEntity<Void> deleteComplaint(@PathVariable long id) {
-        Complaint complaint = complaintService.getSingleComplaint(id);
-        if (complaint != null) {
-            complaintService.deleteComplaint(id);
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+        complaintService.deleteComplaint(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
 }
