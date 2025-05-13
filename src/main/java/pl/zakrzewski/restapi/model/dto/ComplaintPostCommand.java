@@ -1,6 +1,6 @@
 package pl.zakrzewski.restapi.model.dto;
 
-import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import lombok.Data;
 
@@ -8,13 +8,12 @@ import lombok.Data;
 @Builder
 public class ComplaintPostCommand {
 
+    @NotNull
     private Long userId;
 
+    @NotNull
     private Long productId;
 
     private String content;
-
-    @NotBlank
-    private String country;
 
 }

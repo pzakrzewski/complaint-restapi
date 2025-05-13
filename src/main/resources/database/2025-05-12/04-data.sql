@@ -1,16 +1,11 @@
 --liquibase formatted sql
 --changeset pzakrzewski94:4
+set foreign_key_checks=0;
 
-insert into users(id, first_name, last_name)
-values(1,'Przemek','Zakrzewski');
-insert into users(id, first_name, last_name)
-values(2,'Tadeusz','Norek');
-insert into users(id, first_name, last_name)
-values(3,'Karol','Krawczyk');
+ALTER TABLE complaints
+    ADD CONSTRAINT complaints_product_id
+    FOREIGN KEY (product_id) REFERENCES products(id);
 
-insert into products(id, name)
-values(1, 'Book');
-insert into products(id, name)
-values(2, 'Game');
-insert into products(id, name)
-values(3, 'Toy');
+ALTER TABLE complaints
+    ADD CONSTRAINT complaints_user_id
+    FOREIGN KEY (user_id) REFERENCES users(id);

@@ -47,7 +47,7 @@ public class ComplaintController {
     }
 
     @PutMapping("/complaints/{id}")
-    public ResponseEntity<ComplaintDto> editComplaint(@PathVariable long id, @RequestBody ComplaintPutCommand complaint) {
+    public ResponseEntity<ComplaintDto> editComplaint(@PathVariable long id, @RequestBody @Valid ComplaintPutCommand complaint) {
         Complaint editedComplaint = complaintService.editComplaint(id, complaint);
         ComplaintDto complaintDto = ComplaintDtoMapper.mapToComplaintDto(editedComplaint);
         return new ResponseEntity<>(complaintDto, HttpStatus.OK);

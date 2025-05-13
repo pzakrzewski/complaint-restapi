@@ -240,7 +240,6 @@ class ComplaintControllerTest extends AbstractIntegrationTest {
                 .productId(product.getId())
                 .userId(user.getId())
                 .content("Test content")
-                .country("Poland")
                 .build();
 
         // when
@@ -271,7 +270,6 @@ class ComplaintControllerTest extends AbstractIntegrationTest {
                 .productId(10L)
                 .userId(user.getId())
                 .content("Test content")
-                .country("Poland")
                 .build();
 
         // when
@@ -299,7 +297,6 @@ class ComplaintControllerTest extends AbstractIntegrationTest {
                 .productId(product.getId())
                 .userId(10L)
                 .content("Test content")
-                .country("Poland")
                 .build();
 
         // when
