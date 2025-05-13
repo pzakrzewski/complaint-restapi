@@ -2,12 +2,14 @@ package pl.zakrzewski.restapi.config;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.springframework.context.annotation.Profile;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
 
 @Component
+@Profile("!test")
 public class JwtUtil {
 
     private final String SECRET_KEY = "secret_key_example";

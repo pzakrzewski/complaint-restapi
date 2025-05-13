@@ -1,14 +1,19 @@
 package pl.zakrzewski.restapi;
 
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Import;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.testcontainers.containers.MySQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
+import pl.zakrzewski.restapi.config.TestSecurityConfig;
 
 @SpringBootTest
 @Testcontainers
+@ActiveProfiles("test")
+@Import(TestSecurityConfig.class)
 public class AbstractIntegrationTest {
 
     @Container

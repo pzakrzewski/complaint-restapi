@@ -1,5 +1,6 @@
 package pl.zakrzewski.restapi.config;
 
+import org.springframework.context.annotation.Profile;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -8,6 +9,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
+@Profile("!test")
 public class MyUserDetailsService implements UserDetailsService {
 
     @Override

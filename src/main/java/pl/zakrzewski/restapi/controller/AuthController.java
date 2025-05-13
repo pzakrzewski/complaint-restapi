@@ -1,6 +1,7 @@
 package pl.zakrzewski.restapi.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -17,6 +18,7 @@ import pl.zakrzewski.restapi.config.MyUserDetailsService;
 
 @RestController
 @RequestMapping("/auth")
+@Profile("!test")
 public class AuthController {
 
     @Autowired
