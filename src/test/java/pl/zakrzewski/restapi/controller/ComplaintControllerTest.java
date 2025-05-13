@@ -240,7 +240,6 @@ class ComplaintControllerTest extends AbstractIntegrationTest {
                 .productId(product.getId())
                 .userId(user.getId())
                 .content("Test content")
-                .created(LocalDateTime.now())
                 .country("Poland")
                 .build();
 
@@ -272,7 +271,6 @@ class ComplaintControllerTest extends AbstractIntegrationTest {
                 .productId(10L)
                 .userId(user.getId())
                 .content("Test content")
-                .created(LocalDateTime.now())
                 .country("Poland")
                 .build();
 
@@ -301,7 +299,6 @@ class ComplaintControllerTest extends AbstractIntegrationTest {
                 .productId(product.getId())
                 .userId(10L)
                 .content("Test content")
-                .created(LocalDateTime.now())
                 .country("Poland")
                 .build();
 

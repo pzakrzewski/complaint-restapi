@@ -15,6 +15,7 @@ import pl.zakrzewski.restapi.repository.ComplaintRepository;
 import pl.zakrzewski.restapi.repository.ProductRepository;
 import pl.zakrzewski.restapi.repository.UserRepository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -62,7 +63,7 @@ public class ComplaintService {
                     .user(user.get())
                     .country(geoLocationService.getCountryByIp(remoteAddr))
                     .content(complaintPostCommand.getContent())
-                    .created(complaintPostCommand.getCreated())
+                    .created(LocalDateTime.now())
                     .build();
         }
 
