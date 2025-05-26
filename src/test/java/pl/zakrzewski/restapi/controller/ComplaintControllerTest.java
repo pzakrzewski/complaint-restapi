@@ -42,18 +42,27 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Import(TestSecurityConfig.class)
 class ComplaintControllerTest extends AbstractIntegrationTest {
 
-    @Autowired
-    private MockMvc mockMvc;
-    @Autowired
-    private ObjectMapper objectMapper;
-    @Autowired
-    private ComplaintRepository complaintRepository;
-    @Autowired
-    private UserRepository userRepository;
-    @Autowired
-    private ProductRepository productRepository;
+    private final MockMvc mockMvc;
+    private final ObjectMapper objectMapper;
+    private final ComplaintRepository complaintRepository;
+    private final UserRepository userRepository;
+    private final ProductRepository productRepository;
+
     @MockitoBean
     private GeoLocationService geoLocationService;
+
+    @Autowired
+    ComplaintControllerTest(MockMvc mockMvc,
+                            ObjectMapper objectMapper,
+                            ComplaintRepository complaintRepository,
+                            UserRepository userRepository,
+                            ProductRepository productRepository) {
+        this.mockMvc = mockMvc;
+        this.objectMapper = objectMapper;
+        this.complaintRepository = complaintRepository;
+        this.userRepository = userRepository;
+        this.productRepository = productRepository;
+    }
 
     @BeforeEach
     void init() {
