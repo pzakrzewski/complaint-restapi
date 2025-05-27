@@ -2,8 +2,7 @@ package pl.zakrzewski.restapi.service;
 
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-
-import java.util.Map;
+import pl.zakrzewski.restapi.model.dto.IpApiResponse;
 
 @Service
 public class GeoLocationService {
@@ -19,11 +18,11 @@ public class GeoLocationService {
             // API URL for IP info
             String url = "https://ipapi.co/" + ip + "/json/";
 
-            // Send GET request and map the response to a Map
-            Map<String, Object> response = restTemplate.getForObject(url, Map.class);
+            // Send GET request and map the response to custom object
+            IpApiResponse response = restTemplate.getForObject(url, IpApiResponse.class);
 
-            if (response != null && response.containsKey("country_name")) {
-                return (String) response.get("country_name");
+            if (response.getCountry_name() != null) {
+                return response.getCountry_name();
             } else {
                 return "Country not found";
             }
