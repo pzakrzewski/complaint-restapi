@@ -1,5 +1,6 @@
 package pl.zakrzewski.restapi.exception;
 
+import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -32,6 +33,13 @@ public class GlobalExceptionHandler {
                 .body(Map.of("error", "Geo-location service failed",
                         "details", ex.getMessage()
                 ));
+    }
+
+    @ExceptionHandler(OptimisticLockingFailureException.class)
+    public ResponseEntity<String> handleOptimisticLockingFailure(OptimisticLockingFailureException ex) {
+        return ResponseEntity
+                .status(HttpStatus.CONFLICT)
+                .body("Conflict occurred while updating. Please try again.");
     }
 
 }

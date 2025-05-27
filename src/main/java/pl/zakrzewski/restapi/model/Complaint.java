@@ -36,6 +36,9 @@ public class Complaint {
 
     private long counter;
 
+    @Version
+    private Long version;
+
     public void increaseCounter() {
         this.counter++;
     }

@@ -1,6 +1,8 @@
 package pl.zakrzewski.restapi.service;
 
+import io.github.resilience4j.retry.annotation.Retry;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.zakrzewski.restapi.exception.ComplaintNotFoundException;
@@ -42,6 +44,8 @@ public class ComplaintService {
         return complaint.get();
     }
 
+    @Transactional
+    @Retry(name = "complaintRetry", fallbackMethod = "handleOptimisticLockingFailure")
     public Complaint addComplaint(ComplaintPostCommand complaintPostCommand, String remoteAddr) {
         Optional<Product> product = productRepository.findById(complaintPostCommand.getProductId());
         if (product.isEmpty()) {
@@ -88,6 +92,10 @@ public class ComplaintService {
             throw new ComplaintNotFoundException("Complaint not found with id: " + id);
         }
         complaintRepository.deleteById(id);
+    }
+
+    public Complaint handleOptimisticLockingFailure(ComplaintPostCommand command, String remoteAddr, OptimisticLockingFailureException ex) {
+        throw new OptimisticLockingFailureException("Too many concurrent updates, please try again later.");
     }
 
 }

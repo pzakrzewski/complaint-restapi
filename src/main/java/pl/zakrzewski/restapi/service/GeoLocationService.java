@@ -32,7 +32,6 @@ public class GeoLocationService {
         }
     }
 
-    // Fallback method
     public String fallbackCountry(String ip, Throwable t) {
         // Log the error if needed
         return "Country not found";
