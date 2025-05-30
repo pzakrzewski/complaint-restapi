@@ -14,6 +14,14 @@ A Spring Boot-based REST API that allows users to submit and manage complaints a
 
 ---
 
+## 📄 Documentation
+
+You can find full technical documentation in the PDF file below:
+
+[📘 View Documentation (manual.pdf)](docs/manual.pdf)
+
+---
+
 ## 🧰 Tech Stack
 
 - Java 17+
